@@ -7,6 +7,7 @@ namespace DirectX11TutorialObjectEditor
 {
     public class MGSurfaceObjectSet : MGSurface
     {
+        private Texture2D m_BackgroundTexture;
         private Texture2D m_MouseGuidelineTexture;
         private Texture2D m_MouseGuidelineFixedTexture;
 
@@ -27,10 +28,17 @@ namespace DirectX11TutorialObjectEditor
 
         private void CreateMouseGuidelineTextures()
         {
+            m_BackgroundTexture = new Texture2D(Editor.graphics, 1, 1);
             m_MouseGuidelineTexture = new Texture2D(Editor.graphics, 1, 1);
             m_MouseGuidelineFixedTexture = new Texture2D(Editor.graphics, 1, 1);
 
             Color[] data = new Color[1];
+            for (int i = 0; i < data.Length; ++i)
+            {
+                data[i] = Color.CornflowerBlue;
+            }
+            m_BackgroundTexture.SetData(data);
+
             for (int i = 0; i < data.Length; ++i)
             {
                 data[i] = Color.OrangeRed;
@@ -48,12 +56,9 @@ namespace DirectX11TutorialObjectEditor
         {
             base.Draw();
 
-            Editor.graphics.Clear(BackgroundColor);
-
             BeginDrawing();
 
             DrawAllTextures();
-
 
             Rectangle rect_dest;
             Rectangle rect_src = new Rectangle(0, 0, 1, 1);

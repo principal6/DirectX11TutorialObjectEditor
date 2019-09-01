@@ -1,0 +1,7 @@
+<DirectX11TutorialObjectSet>
+  <ObjectSetInfo Name="set0" Texture="ObjectSet.png" />
+  <ObjectSet>
+    <Element Name="clouds" OffsetU="0" OffsetV="0" Width="384" Height="216" />
+    <Element Name="bush0" OffsetU="58" OffsetV="236" Width="109" Height="40" />
+  </ObjectSet>
+</DirectX11TutorialObjectSet>

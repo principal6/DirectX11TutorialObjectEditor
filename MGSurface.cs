@@ -45,7 +45,7 @@ namespace DirectX11TutorialObjectEditor
         public void AddTextureFromFile(string TextureFileName)
         {
             m_Textures.Add(new MGTextureData());
-
+            
             Texture2D texture = Texture2D.FromStream(Editor.graphics, File.OpenRead(m_AssetDir + TextureFileName));
 
             m_Textures.ElementAt(m_Textures.Count - 1).Texture = texture;
@@ -79,7 +79,7 @@ namespace DirectX11TutorialObjectEditor
 
         protected void BeginDrawing()
         {
-            Editor.spriteBatch.Begin();
+            Editor.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
         }
 
         protected void DrawAllTextures()

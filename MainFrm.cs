@@ -20,11 +20,11 @@ namespace DirectX11TutorialObjectEditor
             InitializeComponent();
 
             KAssetDir = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\asset\\";
-
+            
             SurfaceTexture = new MGSurfaceObjectSet(KAssetDir)
             {
                 Parent = FixedInnerSplitter.Panel2,
-                BackgroundColor = new Color(0.4f, 0.8f, 1.0f),
+                BackgroundColor = new Color(0.4f, 0.8f, 1.0f, 1.0f),
                 Dock = DockStyle.Fill                
             };
             SurfaceTexture.MouseMove += SurfaceTexture_MouseMove;
@@ -33,7 +33,7 @@ namespace DirectX11TutorialObjectEditor
             SurfaceObject = new MGSurfaceObject(KAssetDir)
             {
                 Parent = LeftVertSplitter.Panel1,
-                BackgroundColor = new Color(0.6f, 0.8f, 1.0f),
+                BackgroundColor = new Color(0.6f, 0.8f, 1.0f, 1.0f),
                 Dock = DockStyle.Fill
             };
 
@@ -291,6 +291,8 @@ namespace DirectX11TutorialObjectEditor
 
                 LBObjects.Items.Clear();
             }
+
+            new_object_set.Dispose();
         }
     }
 }
