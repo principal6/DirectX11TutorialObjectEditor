@@ -45,9 +45,9 @@
             this.btnErase = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.FixedInnerSplitter = new System.Windows.Forms.SplitContainer();
-            this.LabelMousePos = new System.Windows.Forms.Label();
-            this.LabelMousePosFixed = new System.Windows.Forms.Label();
             this.LabelDistance = new System.Windows.Forms.Label();
+            this.LabelMousePosFixed = new System.Windows.Forms.Label();
+            this.LabelMousePos = new System.Windows.Forms.Label();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.파일ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.새로만들기ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +55,8 @@
             this.저장하기ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.DlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.OuterSplitter)).BeginInit();
             this.OuterSplitter.Panel1.SuspendLayout();
             this.OuterSplitter.Panel2.SuspendLayout();
@@ -68,6 +70,7 @@
             this.ObjectListSplitter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FixedInnerSplitter)).BeginInit();
             this.FixedInnerSplitter.Panel1.SuspendLayout();
+            this.FixedInnerSplitter.Panel2.SuspendLayout();
             this.FixedInnerSplitter.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
@@ -265,19 +268,24 @@
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelDistance);
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelMousePosFixed);
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelMousePos);
+            // 
+            // FixedInnerSplitter.Panel2
+            // 
+            this.FixedInnerSplitter.Panel2.Controls.Add(this.hScrollBar1);
+            this.FixedInnerSplitter.Panel2.Controls.Add(this.vScrollBar1);
             this.FixedInnerSplitter.Size = new System.Drawing.Size(604, 423);
             this.FixedInnerSplitter.SplitterDistance = 25;
             this.FixedInnerSplitter.TabIndex = 0;
             this.FixedInnerSplitter.TabStop = false;
             // 
-            // LabelMousePos
+            // LabelDistance
             // 
-            this.LabelMousePos.AutoSize = true;
-            this.LabelMousePos.Location = new System.Drawing.Point(3, 9);
-            this.LabelMousePos.Name = "LabelMousePos";
-            this.LabelMousePos.Size = new System.Drawing.Size(127, 12);
-            this.LabelMousePos.TabIndex = 0;
-            this.LabelMousePos.Text = "마우스 좌표 (000, 000)";
+            this.LabelDistance.AutoSize = true;
+            this.LabelDistance.Location = new System.Drawing.Point(298, 9);
+            this.LabelDistance.Name = "LabelDistance";
+            this.LabelDistance.Size = new System.Drawing.Size(87, 12);
+            this.LabelDistance.TabIndex = 2;
+            this.LabelDistance.Text = "거리 (000, 000)";
             // 
             // LabelMousePosFixed
             // 
@@ -288,14 +296,14 @@
             this.LabelMousePosFixed.TabIndex = 1;
             this.LabelMousePosFixed.Text = "고정 좌표 (000, 000)";
             // 
-            // LabelDistance
+            // LabelMousePos
             // 
-            this.LabelDistance.AutoSize = true;
-            this.LabelDistance.Location = new System.Drawing.Point(298, 9);
-            this.LabelDistance.Name = "LabelDistance";
-            this.LabelDistance.Size = new System.Drawing.Size(87, 12);
-            this.LabelDistance.TabIndex = 2;
-            this.LabelDistance.Text = "거리 (000, 000)";
+            this.LabelMousePos.AutoSize = true;
+            this.LabelMousePos.Location = new System.Drawing.Point(3, 9);
+            this.LabelMousePos.Name = "LabelMousePos";
+            this.LabelMousePos.Size = new System.Drawing.Size(127, 12);
+            this.LabelMousePos.TabIndex = 0;
+            this.LabelMousePos.Text = "마우스 좌표 (000, 000)";
             // 
             // MainMenu
             // 
@@ -321,7 +329,7 @@
             // 
             this.새로만들기ToolStripMenuItem.Name = "새로만들기ToolStripMenuItem";
             this.새로만들기ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.새로만들기ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.새로만들기ToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.새로만들기ToolStripMenuItem.Text = "새로만들기";
             this.새로만들기ToolStripMenuItem.Click += new System.EventHandler(this.새로만들기ToolStripMenuItem_Click);
             // 
@@ -329,7 +337,7 @@
             // 
             this.불러오기ToolStripMenuItem.Name = "불러오기ToolStripMenuItem";
             this.불러오기ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.불러오기ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.불러오기ToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.불러오기ToolStripMenuItem.Text = "불러오기";
             this.불러오기ToolStripMenuItem.Click += new System.EventHandler(this.불러오기ToolStripMenuItem_Click);
             // 
@@ -337,13 +345,31 @@
             // 
             this.저장하기ToolStripMenuItem.Name = "저장하기ToolStripMenuItem";
             this.저장하기ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.저장하기ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.저장하기ToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.저장하기ToolStripMenuItem.Text = "저장하기";
             this.저장하기ToolStripMenuItem.Click += new System.EventHandler(this.저장하기ToolStripMenuItem_Click);
             // 
             // DlgOpen
             // 
             this.DlgOpen.FileName = "openFileDialog1";
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Location = new System.Drawing.Point(587, 0);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 394);
+            this.vScrollBar1.TabIndex = 0;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VScrollBar1_Scroll);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 377);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(587, 17);
+            this.hScrollBar1.TabIndex = 1;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
             // 
             // MainFrm
             // 
@@ -354,7 +380,6 @@
             this.Controls.Add(this.OuterSplitter);
             this.Name = "MainFrm";
             this.Text = "DirectX11Tutorial Object Editor";
-            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.Resize += new System.EventHandler(this.MainFrm_Resize);
             this.OuterSplitter.Panel1.ResumeLayout(false);
             this.OuterSplitter.Panel2.ResumeLayout(false);
@@ -370,6 +395,7 @@
             this.ObjectListSplitter.ResumeLayout(false);
             this.FixedInnerSplitter.Panel1.ResumeLayout(false);
             this.FixedInnerSplitter.Panel1.PerformLayout();
+            this.FixedInnerSplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FixedInnerSplitter)).EndInit();
             this.FixedInnerSplitter.ResumeLayout(false);
             this.MainMenu.ResumeLayout(false);
@@ -408,5 +434,7 @@
         private System.Windows.Forms.ToolStripMenuItem 저장하기ToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog DlgOpen;
         private System.Windows.Forms.SaveFileDialog DlgSave;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
     }
 }

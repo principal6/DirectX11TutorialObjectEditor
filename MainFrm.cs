@@ -15,6 +15,8 @@ namespace DirectX11TutorialObjectEditor
         private SPosition TextureMousePosition;
         private SPosition TextureMousePositionFixed;
 
+        public static readonly int KScrollDelta = 20;
+
         public MainFrm()
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace DirectX11TutorialObjectEditor
             {
                 Parent = FixedInnerSplitter.Panel2,
                 BackgroundColor = new Color(0.4f, 0.8f, 1.0f, 1.0f),
-                Dock = DockStyle.Fill                
+                Dock = DockStyle.Fill
             };
             SurfaceTexture.MouseMove += SurfaceTexture_MouseMove;
             SurfaceTexture.MouseDown += SurfaceTexture_MouseDown;
@@ -63,7 +65,13 @@ namespace DirectX11TutorialObjectEditor
 
         private void SurfaceTexture_MouseMove(object sender, MouseEventArgs e)
         {
-            TextureMousePosition = e.Location;
+            SPosition new_location = e.Location;
+            new_location.X += SurfaceTexture.GetOffset().X * KScrollDelta;
+            new_location.Y += SurfaceTexture.GetOffset().Y * KScrollDelta;
+            new_location.X = Math.Max(new_location.X, 0);
+            new_location.Y = Math.Max(new_location.Y, 0);
+
+            TextureMousePosition = new_location;
 
             LabelMousePos.Text = "마우스 좌표 (" +
                 TextureMousePosition.X.ToString() + ", " + TextureMousePosition.Y.ToString() + ")";
@@ -82,7 +90,11 @@ namespace DirectX11TutorialObjectEditor
             {
                 SurfaceTexture.ShouldDrawFixedGuideline = true;
 
-                TextureMousePositionFixed = SurfaceTexture.FixedMousePosition = e.Location;
+                SPosition new_location = e.Location;
+                new_location.X += SurfaceTexture.GetOffset().X * KScrollDelta;
+                new_location.Y += SurfaceTexture.GetOffset().Y * KScrollDelta;
+
+                TextureMousePositionFixed = SurfaceTexture.FixedMousePosition = new_location;
 
                 LabelMousePosFixed.Text = "고정 좌표 (" +
                     TextureMousePositionFixed.X.ToString() + ", " + TextureMousePositionFixed.Y.ToString() + ")";
@@ -96,14 +108,6 @@ namespace DirectX11TutorialObjectEditor
         public MGSurfaceObject SurfaceObject { get; }
 
         private ObjectSetManager Manager { get; }
-
-        private void MainFrm_Load(object sender, EventArgs e)
-        {
-            //Manager.CreateNewObjectSet("objects", "object_set.png");
-
-            //SurfaceTexture.AddTextureFromFile(Manager.ObjectSet.TextureFileName);
-            //SurfaceObject.AddTextureFromFile(Manager.ObjectSet.TextureFileName);
-        }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
@@ -217,6 +221,11 @@ namespace DirectX11TutorialObjectEditor
             }
         }
 
+        private void MainFrm_Resize(object sender, EventArgs e)
+        {
+            OuterSplitter.Height = this.ClientSize.Height - MainMenu.Height - 3;
+        }
+
         private void 저장하기ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DlgSave.InitialDirectory = KAssetDir;
@@ -254,17 +263,20 @@ namespace DirectX11TutorialObjectEditor
                 SurfaceTexture.Invalidate();
                 SurfaceObject.Invalidate();
 
+                SSize texture_size = SurfaceTexture.GetTextureSize(0);
+
+                hScrollBar1.LargeChange = KScrollDelta;
+                hScrollBar1.Maximum = texture_size.Width / hScrollBar1.LargeChange;
+
+                vScrollBar1.LargeChange = KScrollDelta;
+                vScrollBar1.Maximum = texture_size.Height / vScrollBar1.LargeChange;
+
                 LBObjects.Items.Clear();
                 foreach (ObjectSetElementData element in Manager.ObjectSet.Elements)
                 {
                     LBObjects.Items.Add(element.ElementName);
                 }
             }
-        }
-
-        private void MainFrm_Resize(object sender, EventArgs e)
-        {
-            OuterSplitter.Height = this.ClientSize.Height - MainMenu.Height - 3;
         }
 
         private void 새로만들기ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -282,7 +294,7 @@ namespace DirectX11TutorialObjectEditor
 
                 SurfaceTexture.ClearTextures();
                 SurfaceTexture.AddTextureFromFile(Manager.ObjectSet.TextureFileName);
-
+                
                 SurfaceObject.ClearTextures();
                 SurfaceObject.AddTextureFromFile(Manager.ObjectSet.TextureFileName);
 
@@ -293,6 +305,20 @@ namespace DirectX11TutorialObjectEditor
             }
 
             new_object_set.Dispose();
+        }
+
+        private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            SurfaceTexture.SetOfffsetX(e.NewValue);
+
+            SurfaceTexture.Invalidate();
+        }
+
+        private void VScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            SurfaceTexture.SetOfffsetY(e.NewValue);
+
+            SurfaceTexture.Invalidate();
         }
     }
 }

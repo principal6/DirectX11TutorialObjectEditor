@@ -5,6 +5,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using SSize = System.Drawing.Size;
+
 namespace DirectX11TutorialObjectEditor
 {
     public class MGTextureData
@@ -63,6 +65,11 @@ namespace DirectX11TutorialObjectEditor
         public void ClearTextures()
         {
             m_Textures.Clear();
+        }
+
+        public SSize GetTextureSize(int Index)
+        {
+            return new SSize(m_Textures[Index].Texture.Width, m_Textures[Index].Texture.Height);
         }
 
         protected override void Initialize()

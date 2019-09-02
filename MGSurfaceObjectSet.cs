@@ -10,6 +10,7 @@ namespace DirectX11TutorialObjectEditor
         private Texture2D m_BackgroundTexture;
         private Texture2D m_MouseGuidelineTexture;
         private Texture2D m_MouseGuidelineFixedTexture;
+        private SPosition m_Offset;
 
         public bool ShouldDrawFixedGuideline { set; get; } = false;
 
@@ -58,17 +59,22 @@ namespace DirectX11TutorialObjectEditor
 
             BeginDrawing();
 
-            DrawAllTextures();
+            foreach (MGTextureData i in m_Textures)
+            {
+                Editor.spriteBatch.Draw(i.Texture, 
+                    new Vector2(-m_Offset.X * MainFrm.KScrollDelta, -m_Offset.Y * MainFrm.KScrollDelta),
+                    i.Rect, i.BlendColor * ((float)i.BlendColor.A / 255.0f));
+            }
 
             Rectangle rect_dest;
             Rectangle rect_src = new Rectangle(0, 0, 1, 1);
 
             if (ShouldDrawFixedGuideline == true)
             {
-                rect_dest = new Rectangle(FixedMousePosition.X, 0, 1, this.Height);
+                rect_dest = new Rectangle(FixedMousePosition.X - m_Offset.X * MainFrm.KScrollDelta, 0, 1, this.Height);
                 Editor.spriteBatch.Draw(m_MouseGuidelineFixedTexture, rect_dest, rect_src, Color.White);
 
-                rect_dest = new Rectangle(0, FixedMousePosition.Y, this.Width, 1);
+                rect_dest = new Rectangle(0, FixedMousePosition.Y - m_Offset.Y * MainFrm.KScrollDelta, this.Width, 1);
                 Editor.spriteBatch.Draw(m_MouseGuidelineFixedTexture, rect_dest, rect_src, Color.White);
             }
 
@@ -79,6 +85,21 @@ namespace DirectX11TutorialObjectEditor
             Editor.spriteBatch.Draw(m_MouseGuidelineTexture, rect_dest, rect_src, Color.White);
 
             EndDrawing();
+        }
+
+        public void SetOfffsetX(int Offset)
+        {
+            m_Offset.X = Offset;
+        }
+
+        public void SetOfffsetY(int Offset)
+        {
+            m_Offset.Y = Offset;
+        }
+
+        public SPosition GetOffset()
+        {
+            return m_Offset;
         }
     }
 }
