@@ -391,6 +391,7 @@
             this.Controls.Add(this.OuterSplitter);
             this.Name = "MainFrm";
             this.Text = "DirectX11Tutorial Object Editor";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainFrm_KeyDown);
             this.Resize += new System.EventHandler(this.MainFrm_Resize);
             this.OuterSplitter.Panel1.ResumeLayout(false);
             this.OuterSplitter.Panel2.ResumeLayout(false);

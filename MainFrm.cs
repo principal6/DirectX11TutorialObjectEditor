@@ -51,6 +51,8 @@ namespace DirectX11TutorialObjectEditor
             TBOffsetV.LostFocus += LBObjectsValueTextBoxes_LostFocus;
             TBWidth.LostFocus += LBObjectsValueTextBoxes_LostFocus;
             TBHeight.LostFocus += LBObjectsValueTextBoxes_LostFocus;
+
+            this.KeyPreview = true;
         }
 
         private void LBObjectsValueTextBoxes_LostFocus(object sender, EventArgs e)
@@ -349,6 +351,18 @@ namespace DirectX11TutorialObjectEditor
             SurfaceTexture.SetOfffsetY(e.NewValue);
 
             SurfaceTexture.Invalidate();
+        }
+
+        private void MainFrm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control == true)
+            {
+                if (e.KeyCode == Keys.A)
+                {
+                    btnAdd.PerformClick();
+                    TBObjectName.Focus();
+                }
+            }
         }
     }
 }
