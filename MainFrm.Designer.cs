@@ -48,6 +48,8 @@
             this.LabelDistance = new System.Windows.Forms.Label();
             this.LabelMousePosFixed = new System.Windows.Forms.Label();
             this.LabelMousePos = new System.Windows.Forms.Label();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.파일ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.새로만들기ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +57,7 @@
             this.저장하기ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.DlgSave = new System.Windows.Forms.SaveFileDialog();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.LabelSelection = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OuterSplitter)).BeginInit();
             this.OuterSplitter.Panel1.SuspendLayout();
             this.OuterSplitter.Panel2.SuspendLayout();
@@ -88,8 +89,8 @@
             // OuterSplitter.Panel2
             // 
             this.OuterSplitter.Panel2.Controls.Add(this.FixedInnerSplitter);
-            this.OuterSplitter.Size = new System.Drawing.Size(800, 423);
-            this.OuterSplitter.SplitterDistance = 192;
+            this.OuterSplitter.Size = new System.Drawing.Size(940, 423);
+            this.OuterSplitter.SplitterDistance = 225;
             this.OuterSplitter.TabIndex = 0;
             this.OuterSplitter.TabStop = false;
             // 
@@ -108,7 +109,7 @@
             // 
             this.LeftVertSplitter.Panel2.Controls.Add(this.ObjectListSplitter);
             this.LeftVertSplitter.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.LeftVertSplitter.Size = new System.Drawing.Size(192, 423);
+            this.LeftVertSplitter.Size = new System.Drawing.Size(225, 423);
             this.LeftVertSplitter.SplitterDistance = 170;
             this.LeftVertSplitter.TabIndex = 1;
             this.LeftVertSplitter.TabStop = false;
@@ -138,7 +139,7 @@
             this.ObjectListSplitter.Panel2.Controls.Add(this.TBObjectName);
             this.ObjectListSplitter.Panel2.Controls.Add(this.btnErase);
             this.ObjectListSplitter.Panel2.Controls.Add(this.btnAdd);
-            this.ObjectListSplitter.Size = new System.Drawing.Size(192, 249);
+            this.ObjectListSplitter.Size = new System.Drawing.Size(225, 249);
             this.ObjectListSplitter.SplitterDistance = 110;
             this.ObjectListSplitter.TabIndex = 0;
             this.ObjectListSplitter.TabStop = false;
@@ -150,7 +151,7 @@
             this.LBObjects.ItemHeight = 12;
             this.LBObjects.Location = new System.Drawing.Point(0, 0);
             this.LBObjects.Name = "LBObjects";
-            this.LBObjects.Size = new System.Drawing.Size(192, 110);
+            this.LBObjects.Size = new System.Drawing.Size(225, 110);
             this.LBObjects.TabIndex = 2;
             this.LBObjects.SelectedIndexChanged += new System.EventHandler(this.LBObjects_SelectedIndexChanged);
             // 
@@ -265,6 +266,7 @@
             // 
             // FixedInnerSplitter.Panel1
             // 
+            this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelSelection);
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelDistance);
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelMousePosFixed);
             this.FixedInnerSplitter.Panel1.Controls.Add(this.LabelMousePos);
@@ -273,7 +275,7 @@
             // 
             this.FixedInnerSplitter.Panel2.Controls.Add(this.hScrollBar1);
             this.FixedInnerSplitter.Panel2.Controls.Add(this.vScrollBar1);
-            this.FixedInnerSplitter.Size = new System.Drawing.Size(604, 423);
+            this.FixedInnerSplitter.Size = new System.Drawing.Size(711, 423);
             this.FixedInnerSplitter.SplitterDistance = 25;
             this.FixedInnerSplitter.TabIndex = 0;
             this.FixedInnerSplitter.TabStop = false;
@@ -281,7 +283,7 @@
             // LabelDistance
             // 
             this.LabelDistance.AutoSize = true;
-            this.LabelDistance.Location = new System.Drawing.Point(298, 9);
+            this.LabelDistance.Location = new System.Drawing.Point(568, 9);
             this.LabelDistance.Name = "LabelDistance";
             this.LabelDistance.Size = new System.Drawing.Size(87, 12);
             this.LabelDistance.TabIndex = 2;
@@ -305,13 +307,31 @@
             this.LabelMousePos.TabIndex = 0;
             this.LabelMousePos.Text = "마우스 좌표 (000, 000)";
             // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 377);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(694, 17);
+            this.hScrollBar1.TabIndex = 1;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Location = new System.Drawing.Point(694, 0);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 394);
+            this.vScrollBar1.TabIndex = 0;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VScrollBar1_Scroll);
+            // 
             // MainMenu
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.파일ToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(800, 24);
+            this.MainMenu.Size = new System.Drawing.Size(940, 24);
             this.MainMenu.TabIndex = 1;
             this.MainMenu.Text = "MainMenu";
             // 
@@ -353,29 +373,20 @@
             // 
             this.DlgOpen.FileName = "openFileDialog1";
             // 
-            // vScrollBar1
+            // LabelSelection
             // 
-            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar1.Location = new System.Drawing.Point(587, 0);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 394);
-            this.vScrollBar1.TabIndex = 0;
-            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VScrollBar1_Scroll);
-            // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 377);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(587, 17);
-            this.hScrollBar1.TabIndex = 1;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
+            this.LabelSelection.AutoSize = true;
+            this.LabelSelection.Location = new System.Drawing.Point(311, 9);
+            this.LabelSelection.Name = "LabelSelection";
+            this.LabelSelection.Size = new System.Drawing.Size(213, 12);
+            this.LabelSelection.TabIndex = 3;
+            this.LabelSelection.Text = "선택 - 위치(000, 000) - 크기(000, 000)";
             // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(940, 450);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.OuterSplitter);
             this.Name = "MainFrm";
@@ -436,5 +447,6 @@
         private System.Windows.Forms.SaveFileDialog DlgSave;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.Label LabelSelection;
     }
 }

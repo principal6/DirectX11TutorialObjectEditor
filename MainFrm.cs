@@ -81,6 +81,24 @@ namespace DirectX11TutorialObjectEditor
                 Math.Abs(TextureMousePosition.Y - TextureMousePositionFixed.Y).ToString() + ")";
 
             SurfaceTexture.CurrentMousePosition = e.Location;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                Rectangle selection = new Rectangle
+                        (
+                        Math.Min(TextureMousePosition.X, TextureMousePositionFixed.X),
+                        Math.Min(TextureMousePosition.Y, TextureMousePositionFixed.Y),
+                        Math.Abs(TextureMousePosition.X - TextureMousePositionFixed.X),
+                        Math.Abs(TextureMousePosition.Y - TextureMousePositionFixed.Y)
+                        );
+
+                SurfaceTexture.SetSelection(selection);
+
+                LabelSelection.Text = "선택 - 위치(" +
+                    selection.X.ToString() + ", " + selection.Y.ToString() + ") - 크기(" +
+                    selection.Width.ToString() + ", " + selection.Height.ToString() + ")";
+            }
+
             SurfaceTexture.Invalidate();
         }
 
@@ -101,6 +119,12 @@ namespace DirectX11TutorialObjectEditor
 
                 SurfaceTexture.Invalidate();
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                SurfaceTexture.SetSelection(new Rectangle(0, 0, 0, 0));
+
+                LabelSelection.Text = "선택 - 위치(0, 0) - 크기(0, 0)";
+            }
         }
 
         public MGSurfaceObjectSet SurfaceTexture { get; }
@@ -111,6 +135,8 @@ namespace DirectX11TutorialObjectEditor
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
+            if (Manager.ObjectSet == null) return;
+
             bool name_collision = true;
             int new_element_name_index = LBObjects.Items.Count;
             string new_element_name = "";
@@ -132,12 +158,14 @@ namespace DirectX11TutorialObjectEditor
                 }
             }
 
+            Rectangle selection = SurfaceTexture.GetSelection();
+
             ObjectSetElementData new_element = new ObjectSetElementData
             {
                 ElementName = new_element_name,
-                OffsetU = 0,
-                OffsetV = 0,
-                Size = new SSize(0, 0)
+                OffsetU = selection.X,
+                OffsetV = selection.Y,
+                Size = new SSize(selection.Width, selection.Height)
             };
 
             Manager.ObjectSet.Elements.Add(new_element);
@@ -149,6 +177,7 @@ namespace DirectX11TutorialObjectEditor
 
         private void BtnErase_Click(object sender, EventArgs e)
         {
+            if (Manager.ObjectSet == null) return;
             if (Manager.ObjectSet.Elements.Count == 0) return;
 
             int post_index = Math.Max(LBObjects.SelectedIndex - 1, 0);
@@ -163,28 +192,9 @@ namespace DirectX11TutorialObjectEditor
             }
         }
 
-        private void LBObjects_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (LBObjects.SelectedIndex == -1) return;
-
-            ObjectSetElementData element = Manager.ObjectSet.Elements[LBObjects.SelectedIndex];
-
-            TBObjectName.Text = element.ElementName;
-
-            TBOffsetU.Text = element.OffsetU.ToString();
-            TBOffsetV.Text = element.OffsetV.ToString();
-
-            TBWidth.Text = element.Size.Width.ToString();
-            TBHeight.Text = element.Size.Height.ToString();
-
-            SurfaceObject.DrawingRectangle = 
-                new Rectangle(element.OffsetU, element.OffsetV, element.Size.Width, element.Size.Height);
-
-            SurfaceObject.Invalidate();
-        }
-
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
+            if (Manager.ObjectSet == null) return;
             if (Manager.ObjectSet.Elements.Count == 0) return;
 
             ObjectSetElementData element = Manager.ObjectSet.Elements[LBObjects.SelectedIndex];
@@ -211,6 +221,26 @@ namespace DirectX11TutorialObjectEditor
             }
 
             LBObjects.Items[LBObjects.SelectedIndex] = TBObjectName.Text;
+        }
+
+        private void LBObjects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (LBObjects.SelectedIndex == -1) return;
+
+            ObjectSetElementData element = Manager.ObjectSet.Elements[LBObjects.SelectedIndex];
+
+            TBObjectName.Text = element.ElementName;
+
+            TBOffsetU.Text = element.OffsetU.ToString();
+            TBOffsetV.Text = element.OffsetV.ToString();
+
+            TBWidth.Text = element.Size.Width.ToString();
+            TBHeight.Text = element.Size.Height.ToString();
+
+            SurfaceObject.DrawingRectangle = 
+                new Rectangle(element.OffsetU, element.OffsetV, element.Size.Width, element.Size.Height);
+
+            SurfaceObject.Invalidate();
         }
 
         private void LBObjectsTextBoxes_KeyDown(object sender, KeyEventArgs e)
