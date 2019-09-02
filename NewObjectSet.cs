@@ -12,8 +12,12 @@ namespace DirectX11TutorialObjectEditor
 {
     public partial class NewObjectSet : Form
     {
-        public NewObjectSet()
+        private readonly string m_AssetDir;
+
+        public NewObjectSet(string AssetDir)
         {
+            m_AssetDir = AssetDir;
+
             InitializeComponent();
         }
 
@@ -33,6 +37,30 @@ namespace DirectX11TutorialObjectEditor
 
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void OpenTexture()
+        {
+            DlgOpen.InitialDirectory = m_AssetDir;
+            DlgOpen.Filter = "텍스처 파일 (*.png)|*.png";
+            DlgOpen.DefaultExt = ".png";
+            DlgOpen.FileName = "";
+            DlgOpen.Title = "오브젝트 셋 텍스처 불러오기";
+
+            if (DlgOpen.ShowDialog() == DialogResult.OK)
+            {
+                tbTextureFileName.Text = DlgOpen.SafeFileName;
+            }
+        }
+
+        private void TbTextureFileName_MouseDown(object sender, MouseEventArgs e)
+        {
+            OpenTexture();
+        }
+
+        private void TbTextureFileName_Enter(object sender, EventArgs e)
+        {
+            OpenTexture();
         }
     }
 }

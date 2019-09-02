@@ -311,7 +311,7 @@ namespace DirectX11TutorialObjectEditor
 
         private void 새로만들기ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewObjectSet new_object_set = new NewObjectSet();
+            NewObjectSet new_object_set = new NewObjectSet(KAssetDir);
             new_object_set.ShowDialog();
 
             if (new_object_set.DialogResult == DialogResult.OK)

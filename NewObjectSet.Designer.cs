@@ -34,6 +34,7 @@
             this.tbTextureFileName = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.DlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label1
@@ -67,6 +68,8 @@
             this.tbTextureFileName.Name = "tbTextureFileName";
             this.tbTextureFileName.Size = new System.Drawing.Size(100, 21);
             this.tbTextureFileName.TabIndex = 3;
+            this.tbTextureFileName.Enter += new System.EventHandler(this.TbTextureFileName_Enter);
+            this.tbTextureFileName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TbTextureFileName_MouseDown);
             // 
             // btnOK
             // 
@@ -87,6 +90,10 @@
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "취소";
             this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // DlgOpen
+            // 
+            this.DlgOpen.FileName = "openFileDialog1";
             // 
             // NewObjectSet
             // 
@@ -117,5 +124,6 @@
         private System.Windows.Forms.TextBox tbTextureFileName;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.OpenFileDialog DlgOpen;
     }
 }
